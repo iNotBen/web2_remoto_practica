@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2 id="nombre">Nombre Pokemon</h2>
+    <img id="imagen" src="" alt="">
+    <p id="id">ID</p>
+    <p id="altura">Altura</p>
+    <p id="peso">Peso</p>
+    <p id="poderes">Habilidades</p>
+
+    <script>
+        let nombrePokemon = "pikachu";
+
+        fetch(`https://pokeapi.co/api/v2/pokemon/${nombrePokemon}`)
+            .then(response=>response.json())
+            .then(data=>{
+                document.getElementById('nombre').textContent = data.name.toUpperCase();
+                document.getElementById('imagen').src = data.sprites.front_default;
+                document.getElementById('id').textContent = data.id;
+                document.getElementById('altura').textContent = data.height;
+                document.getElementById('peso').textContent = data.weight;
+                
+                 let textoHabilidades = '';
+
+                for(let i=0; i<data.abilities.length;i++){
+                    textoHabilidades+= data.abilities[i].ability.name+", ";
+                }
+
+                document.getElementById('poderes').textContent = textoHabilidades;
+               
+                
+            })
+            .catch(error=>console.error("Error".error));
+
+    </script>
+</body>
+</html>

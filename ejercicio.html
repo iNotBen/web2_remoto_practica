@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        input{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    
+
+    <h3>Registor Automovil</h3>
+    <form id="regAuto">
+        <label for="placa">Placa</label>
+        <input type="text" name="placa" id="placa">
+        <label for="marca">Marca</label>
+        <input type="text" name="marca" id="marca">
+        <label for="modelo">Modelo</label>
+        <input type="text" name="modelo" id="modelo">
+        <label for="year">Año</label>
+        <input type="text" name="year" id="year">
+        <input type="submit" value="Registrar">
+    </form>
+    
+<hr>
+    <table>
+        <thead>
+            <tr>
+                <th>Placa</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Año</th>
+            </tr>
+        </thead>
+        <tbody id="tablaAutos">
+
+        </tbody>
+    </table>
+
+    <hr>
+
+    <h3>Codigo formateado a JSON</h3>
+    <pre id="formatoJson">
+        Texto formateado para envio
+    </pre>
+
+    <hr>
+
+    <!-- Filtrar todos los registros mayores a 2022 -->
+    <button id="filtrar">Filtrar</button>
+
+
+    
+
+    <script src="jquery.js"></script>
+    <script>
+        const listaAutos = [];
+
+        $("#regAuto").on("submit", function (e) {
+            e.preventDefault();
+            let placa = $("#placa").val();
+            let marca = $("#marca").val();
+            let modelo = $("#modelo").val();
+            let year = parseInt($("#year").val());
+
+            const auto = {
+            placa: placa,
+            marca: marca,
+            modelo: modelo,
+            year: year
+            };
+
+            listaAutos.push(auto);
+            generarTabla();
+            this.reset();
+
+        });
+
+        function generarTabla(){
+            let filaHTML = '';
+
+            for(let i=0; i<listaAutos.length; i++){
+                filaHTML+="<tr>";
+                    filaHTML+="<td>"+listaAutos[i].placa+"</td>";
+                    filaHTML+="<td>"+listaAutos[i].marca+"</td>";
+                    filaHTML+="<td>"+listaAutos[i].modelo+"</td>";
+                    filaHTML+="<td>"+listaAutos[i].year+"</td>";
+                filaHTML+="</tr>";
+            }
+
+            $("#tablaAutos").html(filaHTML);
+
+            const formateoDatos = JSON.stringify(listaAutos);
+            $("#formatoJson").text(formateoDatos,null,2);
+        }
+
+        
+
+
+
+        
+    </script>
+</body>
+</html>
